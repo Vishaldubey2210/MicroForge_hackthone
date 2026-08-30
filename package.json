@@ -1,0 +1,25 @@
+{
+  "name": "microforge-monorepo",
+  "version": "1.0.0",
+  "description": "SchemaForge - Next-Generation AI Schema Builder, Code Generator & API Engine",
+  "private": true,
+  "workspaces": [
+    "schemaforge/backend",
+    "schemaforge/frontend"
+  ],
+  "scripts": {
+    "dev": "concurrently "npm run dev --workspace=schemaforge/backend" "npm run dev --workspace=schemaforge/frontend"",
+    "dev:backend": "npm run dev --workspace=schemaforge/backend",
+    "dev:frontend": "npm run dev --workspace=schemaforge/frontend",
+    "build": "npm run build --workspace=schemaforge/frontend",
+    "lint": "npm run lint --workspace=schemaforge/frontend",
+    "test": "npm run test --workspace=schemaforge/backend",
+    "docker:up": "docker compose up -d",
+    "docker:down": "docker compose down"
+  },
+  "devDependencies": {
+    "concurrently": "^8.2.2"
+  },
+  "author": "Vishal Dubey",
+  "license": "MIT"
+}
