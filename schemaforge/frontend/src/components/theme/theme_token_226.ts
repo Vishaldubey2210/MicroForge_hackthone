@@ -1,0 +1,5 @@
+export const themeToken226 = {
+  accent: 'rgba(99, 102, 241, 0.26)',
+  blur: '16px',
+  radius: '16px'
+};
