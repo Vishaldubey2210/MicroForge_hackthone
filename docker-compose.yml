@@ -1,0 +1,45 @@
+version: '3.8'
+
+services:
+  mongodb:
+    image: mongo:7.0
+    container_name: schemaforge-mongo
+    restart: unless-stopped
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo_data:/data/db
+    environment:
+      - MONGO_INITDB_DATABASE=schemaforge
+
+  backend:
+    build:
+      context: ./schemaforge/backend
+      dockerfile: Dockerfile
+    container_name: schemaforge-backend
+    restart: unless-stopped
+    ports:
+      - "5000:5000"
+    environment:
+      - PORT=5000
+      - MONGO_URI=mongodb://mongodb:27017/schemaforge
+      - JWT_SECRET=schemaforge_super_secure_jwt_secret_2026
+      - NODE_ENV=production
+    depends_on:
+      - mongodb
+
+  frontend:
+    build:
+      context: ./schemaforge/frontend
+      dockerfile: Dockerfile
+    container_name: schemaforge-frontend
+    restart: unless-stopped
+    ports:
+      - "3000:3000"
+    environment:
+      - NEXT_PUBLIC_API_URL=http://localhost:5000/api
+    depends_on:
+      - backend
+
+volumes:
+  mongo_data:
